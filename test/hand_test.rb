@@ -86,7 +86,6 @@ class HandTest < Test::Unit::TestCase
     assert @four_of_a_kind> @full_house
   end
 
-
   def test_quads_against_other_quads
     losing_quads = quads_hand_from("8 Clubs", "8 Hearts", "8 Spades", 
                                    "8 Diamonds", "9 Clubs")

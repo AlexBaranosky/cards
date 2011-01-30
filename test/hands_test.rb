@@ -1,8 +1,8 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/test_helper.rb'
-require File.dirname(__FILE__) + '/../lib/hand_finder.rb'
+require File.dirname(__FILE__) + '/../lib/hands.rb'
 
-class HandFinderTest < Test::Unit::TestCase
+class HandsTest < Test::Unit::TestCase
   include TestHelper
 
   def test_should_create_high_card_hand
@@ -98,6 +98,6 @@ class HandFinderTest < Test::Unit::TestCase
   
   def best_possible_hand_from(*cards)
     cards = create_cards(*cards)
-    Game::HandFinder.best_possible_hand_from(cards)
+    Game::Hands.best_possible_hand_from(cards)
   end
 end

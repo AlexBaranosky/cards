@@ -6,11 +6,17 @@ module Game
     include Comparable
     attr_reader :rank, :cards, :card_info
 
+    CannotCreateHand = Class.new(Exception)
+
     def self.create(cards)
+      raise CannotCreateHand unless can_create_hand_from?(cards)
       card_info = Game::CardInfo.info_for(cards)
-      if valid?(card_info)
-        return self.new(cards, card_info)
-      end
+      self.new(cards, card_info)
+    end
+
+    def self.can_create_hand_from?(cards)
+      card_info = Game::CardInfo.info_for(cards)
+      valid?(card_info)
     end
 
     def initialize(cards, card_info)
@@ -26,12 +32,16 @@ module Game
       cards.high_card
     end
 
-   def <=>(opponent)
-     return  1 if beats?(opponent)
-     return -1 if opponent.beats?(self)
-     0
-   end
-  
+    def self.rank
+      @rank
+    end
+
+    def <=>(opponent)
+      return 1 if beats?(opponent)
+      return -1 if opponent.beats?(self)
+      0
+    end
+
     protected
     def beats?(opponent)
       return compare_same_rank(opponent) if rank == opponent.rank
@@ -65,7 +75,7 @@ module Game
 
     def self.valid?(card_info)
       !(card_info.pairs || card_info.trips || card_info.quads ||
-           card_info.flush? || card_info.straight?)
+              card_info.flush? || card_info.straight?)
     end
 
     private
@@ -86,10 +96,10 @@ module Game
 
     private
     def compare_same_rank(opponent)
-       if high_pair == opponent.high_pair
-         return wins_by_high_card?(opponent)
-       end
-       return high_pair > opponent.high_pair
+      if high_pair == opponent.high_pair
+        return wins_by_high_card?(opponent)
+      end
+      return high_pair > opponent.high_pair
     end
   end
 
@@ -134,15 +144,16 @@ module Game
 
     private
     def compare_same_rank(opponent)
-       if trips == opponent.trips
-         return wins_by_high_card?(opponent)
-       end
+      if trips == opponent.trips
+        return wins_by_high_card?(opponent)
+      end
       return trips > opponent.trips
     end
   end
 
   class Straight < Hand
     include Game::StraightComparisons
+
     def initialize(cards, card_info)
       @rank = 4
       super
@@ -164,7 +175,7 @@ module Game
     end
 
     def compare_same_rank(opponent)
-      wins_by_high_card?(opponent) 
+      wins_by_high_card?(opponent)
     end
   end
 
@@ -183,11 +194,11 @@ module Game
     def trips
       card_info.trips.first
     end
-  
+
 
     private
     def compare_same_rank(opponent)
-      if trips == opponent.trips 
+      if trips == opponent.trips
         return high_pair > opponent.high_pair
       else
         return trips > opponent.trips
@@ -202,7 +213,7 @@ module Game
     end
 
     def self.valid?(card_info)
-      card_info.quads 
+      card_info.quads
     end
 
     protected
@@ -212,8 +223,8 @@ module Game
 
     private
     def compare_same_rank(opponent)
-      if self.quads == opponent.quads 
-        return wins_by_high_card?(opponent) 
+      if self.quads == opponent.quads
+        return wins_by_high_card?(opponent)
       end
       return self.quads > opponent.quads
     end
@@ -221,6 +232,7 @@ module Game
 
   class StraightFlush < Hand
     include Game::StraightComparisons
+
     def initialize(cards, card_info)
       @rank = 8
       super
