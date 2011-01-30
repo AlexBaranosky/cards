@@ -18,10 +18,4 @@ module Game
       cards.ranks == ["A", 5, 4, 3, 2]
     end
   end
-
-  module FlushHelpers
-    def all_same_suit?(cards)
-      cards.suits.uniq.size == 1
-    end
-  end
 end

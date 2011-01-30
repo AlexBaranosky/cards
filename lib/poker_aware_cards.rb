@@ -8,7 +8,6 @@ module Game
   class PokerAwareCards
     include Comparable
     extend StraightHelpers
-    extend FlushHelpers
 
     def self.create(cards)
       raise NotFiveCards unless cards.size == 5
@@ -90,6 +89,10 @@ module Game
       @groupings = groupings
       @is_flush = is_flush
       @is_straight = is_straight
+    end
+
+    def self.all_same_suit?(cards)
+      cards.suits.uniq.size == 1
     end
   end
 
