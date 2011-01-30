@@ -33,15 +33,15 @@ module Game
       @rank
     end
 
-    def <=>(opponent)
-      comparison = rank <=> opponent.rank
-      return compare_same_rank(opponent) if comparison == 0
+    def <=>(other_hand)
+      comparison = rank <=> other_hand.rank
+      return compare_same_rank(other_hand) if comparison == 0
       comparison
     end
 
-    def compare_same_rank(opponent)
-      return 0 if @poker_cards == opponent.poker_cards
-      beats_same_rank?(opponent) ? 1 : -1
+    def compare_same_rank(other_hand)
+      return 0 if @poker_cards == other_hand.poker_cards
+      beats_same_rank?(other_hand) ? 1 : -1
     end
 
     protected
@@ -66,8 +66,8 @@ module Game
     end
 
     private
-    def beats_same_rank?(opponent)
-      poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      poker_cards.wins_by_high_card?(other_hand.poker_cards)
     end
   end
 
@@ -82,11 +82,11 @@ module Game
     end
 
     private
-    def beats_same_rank?(opponent)
-      if high_pair == opponent.high_pair
-        return poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      if high_pair == other_hand.high_pair
+        return poker_cards.wins_by_high_card?(other_hand.poker_cards)
       end
-      return high_pair > opponent.high_pair
+      return high_pair > other_hand.high_pair
     end
   end
 
@@ -103,14 +103,14 @@ module Game
 
 
     private
-    def beats_same_rank?(opponent)
-      if high_pair == opponent.high_pair
-        if low_pair == opponent.low_pair
-          return poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      if high_pair == other_hand.high_pair
+        if low_pair == other_hand.low_pair
+          return poker_cards.wins_by_high_card?(other_hand.poker_cards)
         end
-        return low_pair > opponent.low_pair
+        return low_pair > other_hand.low_pair
       end
-      return high_pair > opponent.high_pair
+      return high_pair > other_hand.high_pair
     end
   end
 
@@ -130,11 +130,11 @@ module Game
     end
 
     private
-    def beats_same_rank?(opponent)
-      if trips == opponent.trips
-        return poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      if trips == other_hand.trips
+        return poker_cards.wins_by_high_card?(other_hand.poker_cards)
       end
-      return trips > opponent.trips
+      return trips > other_hand.trips
     end
   end
 
@@ -161,8 +161,8 @@ module Game
       poker_cards.flush? && !poker_cards.straight?
     end
 
-    def beats_same_rank?(opponent)
-      poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      poker_cards.wins_by_high_card?(other_hand.poker_cards)
     end
   end
 
@@ -184,11 +184,11 @@ module Game
 
 
     private
-    def beats_same_rank?(opponent)
-      if trips == opponent.trips
-        return high_pair > opponent.high_pair
+    def beats_same_rank?(other_hand)
+      if trips == other_hand.trips
+        return high_pair > other_hand.high_pair
       else
-        return trips > opponent.trips
+        return trips > other_hand.trips
       end
     end
   end
@@ -209,11 +209,11 @@ module Game
     end
 
     private
-    def beats_same_rank?(opponent)
-      if self.quads == opponent.quads
-        return poker_cards.wins_by_high_card?(opponent)
+    def beats_same_rank?(other_hand)
+      if self.quads == other_hand.quads
+        return poker_cards.wins_by_high_card?(other_hand.poker_cards)
       end
-      return self.quads > opponent.quads
+      return self.quads > other_hand.quads
     end
   end
 

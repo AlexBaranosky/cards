@@ -15,10 +15,10 @@ module Game
       self.new(cards, groupings)
     end
 
-    def wins_by_high_card?(opponent)
+    def wins_by_high_card?(other_poker_cards)
       size.times do |index|
-        if self[index] != opponent.poker_cards[index]
-          return self[index] > opponent.poker_cards[index]
+        if self[index] != other_poker_cards[index]
+          return self[index] > other_poker_cards[index]
         end
       end
       false
