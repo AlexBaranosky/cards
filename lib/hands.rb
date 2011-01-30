@@ -20,10 +20,7 @@ module Game
       end
 
       def hand_for(cards)
-        hand_class = HANDS_WORST_TO_BEST.each do |hand_class|
-          can_create = hand_class.can_create_hand_from?(cards)
-          break hand_class if can_create
-        end
+        hand_class = HANDS_WORST_TO_BEST.find { |hand_class| hand_class.can_create_hand_from?(cards) }
         hand_class.create(cards)
       end
     end

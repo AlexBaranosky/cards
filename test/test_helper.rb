@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/../lib/hand.rb'
 module TestHelper
 
   def assert_invalid_hand_of_type(klass, *cards)
-    assert_raise Game::CannotCreateHand do
+    assert_raise Game::Hand::CannotCreateHand do
       cards = create_cards(*cards)
       klass.create(cards)
     end

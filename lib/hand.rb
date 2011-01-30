@@ -74,8 +74,7 @@ module Game
     end
 
     def self.valid?(card_info)
-      !(card_info.pairs || card_info.trips || card_info.quads ||
-              card_info.flush? || card_info.straight?)
+      !(card_info.pairs || card_info.trips || card_info.quads || card_info.flush? || card_info.straight?)
     end
 
     private
@@ -84,7 +83,7 @@ module Game
     end
   end
 
-  class Pair < Hand
+  class Pair < Hand            
     def initialize(cards, card_info)
       @rank = 1
       super

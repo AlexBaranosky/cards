@@ -77,7 +77,7 @@ class HandsTest < Test::Unit::TestCase
 
   def test_should_get_best_full_house_from_more_than_5_cards
     hand = best_possible_hand_from("2 Spades", "2 Clubs", "A Spades",
-                                   "J Spades", "A Diamonds", "2 Hearts", 
+                                   "J Spades", "A Diamonds", "2 Hearts",
                                    "A Clubs")
     assert_equal Game::FullHouse, hand.class
     assert_equal ["A", "A", "A", 2, 2], hand.ranks
@@ -85,7 +85,7 @@ class HandsTest < Test::Unit::TestCase
 
   def test_should_get_four_of_a_kind_from_more_than_5_cards
     hand = best_possible_hand_from("2 Spades", "2 Clubs", "A Spades",
-                                   "A Hearts", "2 Diamonds", "2 Hearts", 
+                                   "A Hearts", "2 Diamonds", "2 Hearts",
                                    "A Clubs")
     assert_equal Game::FourOfAKind, hand.class
     assert_equal ["A", 2, 2, 2, 2], hand.ranks
@@ -95,7 +95,7 @@ class HandsTest < Test::Unit::TestCase
     assert_nil best_possible_hand_from("2 Spades", "2 Clubs",
                                         "A Spades", "3 Hearts")
   end
-  
+
   def best_possible_hand_from(*cards)
     cards = create_cards(*cards)
     Game::Hands.best_possible_hand_from(cards)

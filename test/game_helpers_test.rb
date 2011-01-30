@@ -13,8 +13,7 @@ class HandHelpersTest < Test::Unit::TestCase
   end
 
   def test_all_same_suit_should_be_true
-    cards = create_cards("3 Diamonds", "2 Diamonds", "5 Diamonds",
-                                "A Diamonds", "K Diamonds")
+    cards = create_cards("3 Diamonds", "2 Diamonds", "5 Diamonds", "A Diamonds", "K Diamonds")
     assert all_same_suit?(cards)
   end
 end
