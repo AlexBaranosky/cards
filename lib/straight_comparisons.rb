@@ -4,7 +4,7 @@ module Game
     include StraightHelpers
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if is_ace_to_five?(poker_aware_cards)
         return false
       elsif is_ace_to_five?(opponent.poker_aware_cards)

@@ -5,24 +5,15 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 class HandTest < Test::Unit::TestCase
   include TestHelper
   def setup
-    @trips = trip_hand_from("2 Spades", "2 Hearts", "2 Clubs", 
-                           "7 Clubs", "J Spades") 
-    @pair  = pair_hand_from("9 Spades", "9 Hearts", "5 Clubs",
-                                "A Diamonds", "K Diamonds")
-    @two_pair = two_pair_hand_from("9 Spades", "9 Clubs", "Q Spades",
-                                   "A Spades", "Q Hearts")
-    @high_card = high_card_hand_from("3 Spades", "2 Hearts", "5 Clubs",
-                                "A Diamonds", "K Diamonds")
-    @straight = straight_hand_from("5 Spades", "6 Clubs", "7 Clubs", 
-                                   "8 Hearts", "9 Clubs")
-    @flush = flush_hand_from("K Clubs", "6 Clubs", "7 Clubs", 
-                                   "8 Clubs", "9 Clubs")
-    @full_house = full_house_hand_from("K Clubs", "K Hearts", "K Spades", 
-                                   "9 Diamonds", "9 Clubs")
-    @four_of_a_kind = quads_hand_from("K Clubs", "K Hearts", "K Spades", 
-                                   "K Diamonds", "9 Clubs")
-    @straight_flush = straight_flush_from("5 Clubs", "6 Clubs", "7 Clubs", 
-                                   "8 Clubs", "9 Clubs")
+    @trips = trip_hand_from("2 Spades", "2 Hearts", "2 Clubs", "7 Clubs", "J Spades")
+    @pair  = pair_hand_from("9 Spades", "9 Hearts", "5 Clubs", "A Diamonds", "K Diamonds")
+    @two_pair = two_pair_hand_from("9 Spades", "9 Clubs", "Q Spades", "A Spades", "Q Hearts")
+    @high_card = high_card_hand_from("3 Spades", "2 Hearts", "5 Clubs", "A Diamonds", "K Diamonds")
+    @straight = straight_hand_from("5 Spades", "6 Clubs", "7 Clubs", "8 Hearts", "9 Clubs")
+    @flush = flush_hand_from("K Clubs", "6 Clubs", "7 Clubs", "8 Clubs", "9 Clubs")
+    @full_house = full_house_hand_from("K Clubs", "K Hearts", "K Spades", "9 Diamonds", "9 Clubs")
+    @four_of_a_kind = quads_hand_from("K Clubs", "K Hearts", "K Spades", "K Diamonds", "9 Clubs")
+    @straight_flush = straight_flush_from("5 Clubs", "6 Clubs", "7 Clubs", "8 Clubs", "9 Clubs")
   end
 
   def test_should_define_high_card
@@ -49,10 +40,8 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_straight_comparisons_with_spaceship
-    losing_straight = straight_hand_from("8 Spades", "9 Hearts", "10 Clubs",
-                                         "J Spades", "Q Spades")
-    better_straight = straight_hand_from("K Spades", "9 Hearts", "10 Clubs",
-                                         "J Spades", "Q Spades")
+    losing_straight = straight_hand_from("8 Spades", "9 Hearts", "10 Clubs", "J Spades", "Q Spades")
+    better_straight = straight_hand_from("K Spades", "9 Hearts", "10 Clubs", "J Spades", "Q Spades")
     assert_equal -1, losing_straight <=> better_straight
   end
 
@@ -63,19 +52,15 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_A_to_5_straight_flush
-    losing_straight_flush = straight_flush_from("A Clubs", "2 Clubs", "3 Clubs",
-                                         "4 Clubs", "5 Clubs")
-    better_straight_flush = straight_flush_from("2 Clubs", "3 Clubs", "4 Clubs",
-                                         "5 Clubs", "6 Clubs")
+    losing_straight_flush = straight_flush_from("A Clubs", "2 Clubs", "3 Clubs", "4 Clubs", "5 Clubs")
+    better_straight_flush = straight_flush_from("2 Clubs", "3 Clubs", "4 Clubs", "5 Clubs", "6 Clubs")
     assert better_straight_flush > losing_straight_flush
     assert !(losing_straight_flush > better_straight_flush)
   end
 
   def test_straight_flush_against_other_straight_flush
-    losing_straight_flush = straight_flush_from("10 Clubs", "6 Clubs", 
-                                         "7 Clubs", "8 Clubs", "9 Clubs")
-    winning_straight_flush = straight_flush_from("8 Clubs", "9 Clubs", 
-                                         "10 Clubs", "J Clubs", "Q Clubs")
+    losing_straight_flush = straight_flush_from("10 Clubs", "6 Clubs", "7 Clubs", "8 Clubs", "9 Clubs")
+    winning_straight_flush = straight_flush_from("8 Clubs", "9 Clubs", "10 Clubs", "J Clubs", "Q Clubs")
 
     assert winning_straight_flush > losing_straight_flush 
   end
@@ -83,22 +68,18 @@ class HandTest < Test::Unit::TestCase
   def test_four_of_a_kind_should_beat_inferior_hands
     assert @four_of_a_kind > @trips
     assert @four_of_a_kind > @straight
-    assert @four_of_a_kind> @full_house
+    assert @four_of_a_kind > @full_house
   end
 
   def test_quads_against_other_quads
-    losing_quads = quads_hand_from("8 Clubs", "8 Hearts", "8 Spades", 
-                                   "8 Diamonds", "9 Clubs")
-    winning_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", 
-                                   "K Diamonds", "9 Clubs")
+    losing_quads = quads_hand_from("8 Clubs", "8 Hearts", "8 Spades", "8 Diamonds", "9 Clubs")
+    winning_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", "K Diamonds", "9 Clubs")
     assert winning_quads > losing_quads
   end
 
   def test_quads_against_other_quads_win_by_high_card
-    losing_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", 
-                                   "K Diamonds", "9 Clubs")
-    winning_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", 
-                                   "K Diamonds", "A Clubs")
+    losing_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", "K Diamonds", "9 Clubs")
+    winning_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", "K Diamonds", "A Clubs")
     assert winning_quads > losing_quads
   end
   def test_full_house_should_beat_inferior_hands
@@ -120,37 +101,29 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_full_house_against_other_full_house
-    losing_full_house = full_house_hand_from("Q Clubs", "Q Spades", "Q Hearts",
-                                         "J Diamonds", "J Clubs")
-    better_full_house = full_house_hand_from("A Clubs", "A Spades", 
-                                      "A Hearts", "J Diamonds", "J Clubs")
+    losing_full_house = full_house_hand_from("Q Clubs", "Q Spades", "Q Hearts", "J Diamonds", "J Clubs")
+    better_full_house = full_house_hand_from("A Clubs", "A Spades", "A Hearts", "J Diamonds", "J Clubs")
     assert better_full_house > losing_full_house
     assert !(losing_full_house > better_full_house)
   end
 
   def test_full_house_against_other_full_house_down_to_pair
-    losing_full_house = full_house_hand_from("Q Clubs", "Q Spades", "Q Hearts",
-                                         "8 Diamonds", "8 Clubs")
-    better_full_house = full_house_hand_from("Q Clubs", "Q Spades", 
-                                      "Q Hearts", "J Diamonds", "J Clubs")
+    losing_full_house = full_house_hand_from("Q Clubs", "Q Spades", "Q Hearts", "8 Diamonds", "8 Clubs")
+    better_full_house = full_house_hand_from("Q Clubs", "Q Spades", "Q Hearts", "J Diamonds", "J Clubs")
     assert better_full_house > losing_full_house
     assert !(losing_full_house > better_full_house)
   end
 
   def test_flush_against_other_flush
-    losing_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs",
-                                         "9 Clubs", "J Clubs")
-    better_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs",
-                                         "9 Clubs", "A Clubs")
+    losing_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs", "9 Clubs", "J Clubs")
+    better_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs", "9 Clubs", "A Clubs")
     assert better_flush > losing_flush
     assert !(losing_flush > better_flush)
   end
 
   def test_flush_against_other_flush_compare_several_cards
-    losing_flush = flush_hand_from("5 Clubs", "7 Clubs", "2 Clubs",
-                                         "9 Clubs", "A Clubs")
-    better_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs",
-                                         "9 Clubs", "A Clubs")
+    losing_flush = flush_hand_from("5 Clubs", "7 Clubs", "2 Clubs", "9 Clubs", "A Clubs")
+    better_flush = flush_hand_from("6 Clubs", "7 Clubs", "2 Clubs", "9 Clubs", "A Clubs")
     assert better_flush > losing_flush
     assert !(losing_flush > better_flush)
   end
@@ -164,19 +137,15 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_straight_against_other_straight
-    losing_straight = straight_hand_from("6 Clubs", "7 Clubs", "8 Hearts",
-                                         "9 Spades", "10 Spades")
-    better_straight = straight_hand_from("8 Hearts", "9 Spades", "10 Spades",
-                                         "J Diamonds", "Q Clubs")
+    losing_straight = straight_hand_from("6 Clubs", "7 Clubs", "8 Hearts", "9 Spades", "10 Spades")
+    better_straight = straight_hand_from("8 Hearts", "9 Spades", "10 Spades", "J Diamonds", "Q Clubs")
     assert better_straight > losing_straight
     assert !(losing_straight > better_straight)
   end
 
   def test_A_to_5_straight_against_other_straight
-    losing_straight = straight_hand_from("A Clubs", "2 Clubs", "3 Hearts",
-                                         "4 Spades", "5 Spades")
-    better_straight = straight_hand_from("2 Hearts", "3 Spades", "4 Spades",
-                                         "5 Diamonds", "6 Clubs")
+    losing_straight = straight_hand_from("A Clubs", "2 Clubs", "3 Hearts", "4 Spades", "5 Spades")
+    better_straight = straight_hand_from("2 Hearts", "3 Spades", "4 Spades", "5 Diamonds", "6 Clubs")
     assert better_straight > losing_straight
     assert !(losing_straight > better_straight)
   end
@@ -189,26 +158,20 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_three_of_a_kind_against_other_trips
-    trip_hand = trip_hand_from("2 Spades", "2 Hearts", "2 Clubs", 
-                           "10 Clubs", "6 Spades") 
-    better_trip_hand = trip_hand_from("8 Spades", "8 Hearts", "8 Clubs", 
-                           "7 Clubs", "J Spades") 
-    
+    trip_hand = trip_hand_from("2 Spades", "2 Hearts", "2 Clubs", "10 Clubs", "6 Spades")
+    better_trip_hand = trip_hand_from("8 Spades", "8 Hearts", "8 Clubs", "7 Clubs", "J Spades")
+
     assert better_trip_hand > trip_hand
-    trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", 
-                           "7 Clubs", "J Spades") 
-    better_trip_hand = trip_hand_from("A Spades", "A Hearts", "A Clubs", 
-                           "2 Clubs", "4 Spades") 
-    
+    trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", "7 Clubs", "J Spades")
+    better_trip_hand = trip_hand_from("A Spades", "A Hearts", "A Clubs", "2 Clubs", "4 Spades")
+
     assert !(trip_hand > better_trip_hand)
   end
 
   def test_three_of_a_kind_win_by_high_card
-    trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", 
-                           "7 Clubs", "J Spades") 
-    better_trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", 
-                           "2 Clubs", "A Spades") 
-    
+    trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", "7 Clubs", "J Spades")
+    better_trip_hand = trip_hand_from("K Spades", "K Hearts", "K Clubs", "2 Clubs", "A Spades")
+
     assert better_trip_hand > trip_hand
   end
 
@@ -220,10 +183,8 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_two_pair_against_other_two_pair
-    losing_two_pair = two_pair_hand_from("9 Spades", "9 Clubs", "6 Spades",
-                                   "A Spades", "A Hearts")
-    better_two_pair = two_pair_hand_from("J Spades", "J Clubs", "7 Spades",
-                                   "A Diamonds", "A Clubs")
+    losing_two_pair = two_pair_hand_from("9 Spades", "9 Clubs", "6 Spades", "A Spades", "A Hearts")
+    better_two_pair = two_pair_hand_from("J Spades", "J Clubs", "7 Spades", "A Diamonds", "A Clubs")
     assert better_two_pair > losing_two_pair
 
     losing_two_pair = two_pair_hand_from("9 Spades", "9 Clubs", "6 Spades",

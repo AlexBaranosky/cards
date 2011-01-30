@@ -34,17 +34,17 @@ module Game
     end
 
     def <=>(opponent)
-      return 1 if beats?(opponent)
-      return -1 if opponent.beats?(self)
-      0
+      comparison = rank <=> opponent.rank
+      return compare_same_rank(opponent) if comparison == 0
+      comparison
+    end
+
+    def compare_same_rank(opponent)
+      return 0 if @poker_aware_cards == opponent.poker_aware_cards
+      beats_same_rank?(opponent) ? 1 : -1
     end
 
     protected
-
-    def beats?(opponent)
-      return compare_same_rank(opponent) if rank == opponent.rank
-      rank > opponent.rank
-    end
 
     def high_pair
       poker_aware_cards.high_pair
@@ -66,7 +66,7 @@ module Game
     end
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       poker_aware_cards.wins_by_high_card?(opponent)
     end
   end
@@ -82,7 +82,7 @@ module Game
     end
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if high_pair == opponent.high_pair
         return poker_aware_cards.wins_by_high_card?(opponent)
       end
@@ -103,7 +103,7 @@ module Game
 
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if high_pair == opponent.high_pair
         if low_pair == opponent.low_pair
           return poker_aware_cards.wins_by_high_card?(opponent)
@@ -130,7 +130,7 @@ module Game
     end
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if trips == opponent.trips
         return poker_aware_cards.wins_by_high_card?(opponent)
       end
@@ -161,7 +161,7 @@ module Game
       poker_aware_cards.flush? && !poker_aware_cards.straight?
     end
 
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       poker_aware_cards.wins_by_high_card?(opponent)
     end
   end
@@ -184,7 +184,7 @@ module Game
 
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if trips == opponent.trips
         return high_pair > opponent.high_pair
       else
@@ -209,7 +209,7 @@ module Game
     end
 
     private
-    def compare_same_rank(opponent)
+    def beats_same_rank?(opponent)
       if self.quads == opponent.quads
         return poker_aware_cards.wins_by_high_card?(opponent)
       end
