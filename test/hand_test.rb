@@ -17,8 +17,8 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_should_define_high_card
-    assert_equal "A Diamonds", @high_card.high_card.to_s
-    assert_equal "J Spades", @trips.high_card.to_s
+    assert_equal "A Diamonds", @high_card.poker_cards.high_card.to_s
+    assert_equal "J Spades", @trips.poker_cards.high_card.to_s
   end
 
   def test_should_define_ranks_for_hands

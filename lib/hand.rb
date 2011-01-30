@@ -21,10 +21,6 @@ module Game
       @poker_cards = poker_cards
     end
 
-    def high_card
-      @poker_cards.high_card
-    end
-
     def self.rank
       @rank
     end
