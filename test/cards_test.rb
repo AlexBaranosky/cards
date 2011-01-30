@@ -36,7 +36,6 @@ class CardsTest < Test::Unit::TestCase
                                    "2 Spades", "2 Hearts")
     assert_equal ["Spades","Clubs", "Spades", "Spades", "Hearts"], 
                   container.suits
-
   end
 
   def test_should_keep_cards_in_order_after_appending

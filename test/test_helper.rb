@@ -56,6 +56,7 @@ module TestHelper
     cards = create_cards(*cards)
     Game::FourOfAKind.create(cards)
   end
+  
   def straight_flush_from(*cards)
     cards = create_cards(*cards)
     Game::StraightFlush.create(cards)

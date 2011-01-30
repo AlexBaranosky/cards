@@ -91,11 +91,11 @@ class HandFinderTest < Test::Unit::TestCase
     assert_equal ["A", 2, 2, 2, 2], hand.ranks
   end
 
-
   def test_should_return_nil_when_fewer_than_5_cards
     assert_nil best_possible_hand_from("2 Spades", "2 Clubs",
                                         "A Spades", "3 Hearts")
   end
+  
   def best_possible_hand_from(*cards)
     cards = create_cards(*cards)
     Game::HandFinder.best_possible_hand_from(cards)

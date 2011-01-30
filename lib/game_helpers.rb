@@ -8,6 +8,7 @@ module Game
   module StraightHelpers
     def is_a_straight?(cards)
       return true if is_ace_to_five?(cards)
+
       (cards.size - 1).times do |index|
         return false unless in_order?(cards[index], cards[index+1])
       end

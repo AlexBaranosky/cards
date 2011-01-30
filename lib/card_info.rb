@@ -57,13 +57,10 @@ module Game
     end
   end
 
-  Grouping = Cards
-  CardCountHash = Hash
-
   class Groupings
     def initialize(cards)
-      @groupings = (0..4).map { Grouping.new }
-      counts = CardCountHash.new(0)
+      @groupings = (0..4).map { Cards.new }
+      counts = Hash.new(0)
       cards.each do |card|
         counts[card.rank] += 1
         add(card, counts[card.rank])
