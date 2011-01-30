@@ -6,6 +6,7 @@ module Game
   NotFiveCards = Class.new(ArgumentError)
 
   class PokerAwareCards
+    include Comparable
     extend StraightHelpers
     extend FlushHelpers
 
@@ -15,6 +16,23 @@ module Game
       is_flush = all_same_suit?(cards)
       is_straight = is_a_straight?(cards)
       self.new(cards, groupings, is_flush, is_straight)
+    end
+
+    def wins_by_high_card(opponent)
+      size.times do |index|
+        if self[index] != opponent.poker_aware_cards[index]
+          return self[index] > opponent.poker_aware_cards[index]
+        end
+      end
+      false
+    end
+
+    def <=>(other)
+      @cards <=> other.cards
+    end
+
+    def five_card_combos
+      @cards.five_card_combos.map { |combo| PokerAwareCards.create(combo)}
     end
 
     def size

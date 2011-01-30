@@ -8,14 +8,12 @@ module Game
 
     CannotCreateHand = Class.new(Exception)
 
-    def self.create(cards)
-      raise CannotCreateHand unless can_create_hand_from?(cards)
-      poker_aware_cards = Game::PokerAwareCards.create(cards)
+    def self.create(poker_aware_cards)
+      raise CannotCreateHand unless can_create_hand_from?(poker_aware_cards)
       self.new(poker_aware_cards)
     end
 
-    def self.can_create_hand_from?(cards)
-      poker_aware_cards = Game::PokerAwareCards.create(cards)
+    def self.can_create_hand_from?(poker_aware_cards)
       valid?(poker_aware_cards)
     end
 
@@ -24,11 +22,11 @@ module Game
     end
 
     def ranks
-      poker_aware_cards.ranks
+      @poker_aware_cards.ranks
     end
 
     def high_card
-      poker_aware_cards.high_card
+      @poker_aware_cards.high_card
     end
 
     def self.rank
@@ -55,17 +53,6 @@ module Game
     def low_pair
       poker_aware_cards.low_pair
     end
-
-    private
-
-    def wins_by_high_card?(opponent)
-      poker_aware_cards.size.times do |index|
-        if poker_aware_cards[index] != opponent.poker_aware_cards[index]
-          return poker_aware_cards[index] > opponent.poker_aware_cards[index]
-        end
-      end
-      false
-    end
   end
 
   class HighCard < Hand
@@ -80,7 +67,7 @@ module Game
 
     private
     def compare_same_rank(opponent)
-      wins_by_high_card?(opponent)
+      poker_aware_cards.wins_by_high_card?(opponent)
     end
   end
 
@@ -97,7 +84,7 @@ module Game
     private
     def compare_same_rank(opponent)
       if high_pair == opponent.high_pair
-        return wins_by_high_card?(opponent)
+        return poker_aware_cards.wins_by_high_card?(opponent)
       end
       return high_pair > opponent.high_pair
     end
@@ -119,7 +106,7 @@ module Game
     def compare_same_rank(opponent)
       if high_pair == opponent.high_pair
         if low_pair == opponent.low_pair
-          return wins_by_high_card?(opponent)
+          return poker_aware_cards.wins_by_high_card?(opponent)
         end
         return low_pair > opponent.low_pair
       end
@@ -145,7 +132,7 @@ module Game
     private
     def compare_same_rank(opponent)
       if trips == opponent.trips
-        return wins_by_high_card?(opponent)
+        return poker_aware_cards.wins_by_high_card?(opponent)
       end
       return trips > opponent.trips
     end
@@ -175,7 +162,7 @@ module Game
     end
 
     def compare_same_rank(opponent)
-      wins_by_high_card?(opponent)
+      poker_aware_cards.wins_by_high_card?(opponent)
     end
   end
 
@@ -224,7 +211,7 @@ module Game
     private
     def compare_same_rank(opponent)
       if self.quads == opponent.quads
-        return wins_by_high_card?(opponent)
+        return poker_aware_cards.wins_by_high_card?(opponent)
       end
       return self.quads > opponent.quads
     end
