@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../lib/card.rb'
-require File.dirname(__FILE__) + '/../lib/cards.rb'
+require File.dirname(__FILE__) + '/../lib/sorted_cards.rb'
 require File.dirname(__FILE__) + '/../lib/hand.rb'
 
 module TestHelper
@@ -12,7 +12,7 @@ module TestHelper
   end
 
   def create_cards(*card_strings)
-    card_strings.each_with_object(Game::Cards.new) do |string, cards|
+    card_strings.each_with_object(Game::SortedCards.new) do |string, cards|
       cards << Game::Card.from_string(string)
     end
   end

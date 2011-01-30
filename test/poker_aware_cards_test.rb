@@ -1,8 +1,8 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/test_helper.rb'
-require File.dirname(__FILE__) + '/../lib/card_info.rb'
+require File.dirname(__FILE__) + '/../lib/poker_aware_cards.rb'
 
-class CardInfoTest < Test::Unit::TestCase
+class PokerAwareCardsTest < Test::Unit::TestCase
   include TestHelper
 
   def test_should_error_when_given_too_many_cards
@@ -102,6 +102,6 @@ class CardInfoTest < Test::Unit::TestCase
 
   def card_info_for(*cards)
     cards = create_cards(*cards)
-    Game::CardInfo.info_for(cards)
+    Game::PokerAwareCards.info_for(cards)
   end
 end

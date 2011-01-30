@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/straight_comparisons.rb'
-require File.dirname(__FILE__) + '/card_info.rb'
+require File.dirname(__FILE__) + '/poker_aware_cards.rb'
 
 module Game
   class Hand
@@ -10,12 +10,12 @@ module Game
 
     def self.create(cards)
       raise CannotCreateHand unless can_create_hand_from?(cards)
-      card_info = Game::CardInfo.info_for(cards)
+      card_info = Game::PokerAwareCards.info_for(cards)
       self.new(cards, card_info)
     end
 
     def self.can_create_hand_from?(cards)
-      card_info = Game::CardInfo.info_for(cards)
+      card_info = Game::PokerAwareCards.info_for(cards)
       valid?(card_info)
     end
 

@@ -1,15 +1,16 @@
 module Game
 
-  class Cards
+  class SortedCards
     include Enumerable
 
     attr_reader :cards
+
     def initialize(cards=[])
       @cards = cards
       order_cards
     end
 
-    def five_card_combos 
+    def five_card_combos
       cards.combination(5).map { |combo| self.class.new(combo) }
     end
 
@@ -19,10 +20,6 @@ module Game
 
     def high_card
       first
-    end
-
-    def first
-      cards.first
     end
 
     def last
@@ -57,7 +54,7 @@ module Game
     def empty?
       cards.empty?
     end
- 
+
     private
     def order_cards
       cards.sort! { |a,b| b <=> a }

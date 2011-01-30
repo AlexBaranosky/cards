@@ -1,8 +1,8 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/test_helper.rb'
-require File.dirname(__FILE__) + '/../lib/cards.rb'
+require File.dirname(__FILE__) + '/../lib/sorted_cards.rb'
 
-class CardsTest < Test::Unit::TestCase
+class SortedCardsTest < Test::Unit::TestCase
   include TestHelper
 
   def test_can_create_container

@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/game_helpers.rb'
-require File.dirname(__FILE__) + '/cards.rb'
+require File.dirname(__FILE__) + '/sorted_cards.rb'
 
 module Game
 
   NotFiveCards = Class.new(ArgumentError)
 
-  class CardInfo
+  class PokerAwareCards
     extend StraightHelpers
     extend FlushHelpers
 
@@ -58,7 +58,7 @@ module Game
 
   class Groupings
     def initialize(cards)
-      @groupings = (0..4).map { Cards.new }
+      @groupings = (0..4).map { SortedCards.new }
       cards.each_with_object(Hash.new(0)) do |card, counts|
         counts[card.rank] += 1
         add(card, counts[card.rank])
