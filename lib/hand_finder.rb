@@ -8,12 +8,15 @@ module Game
                             Game::FourOfAKind, Game::StraightFlush ]
     class << self
       def best_possible_hand_from(cards)
-        best_of(possible_hands_from(cards))
+        possible_hands_from(cards).max
       end
 
       private
-      def best_of(hands)
-        hands.sort! { |a,b| b <=> a }.first
+
+      def possible_hands_from(cards)
+        cards.five_card_combos.map do |five_card_combo|
+          find_hand_for(five_card_combo)
+        end
       end
 
       def find_hand_for(cards)
@@ -21,14 +24,6 @@ module Game
           hand = hand_class.create(cards)
           break hand if hand
         end
-      end
-
-      def possible_hands_from(cards)
-        possible_hands = []
-        cards.five_card_combos.each do |five_card_combo|
-          possible_hands << find_hand_for(five_card_combo)
-        end
-        possible_hands
       end
     end
   end
