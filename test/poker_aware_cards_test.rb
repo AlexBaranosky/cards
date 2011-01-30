@@ -102,6 +102,6 @@ class PokerAwareCardsTest < Test::Unit::TestCase
 
   def card_info_for(*cards)
     cards = create_cards(*cards)
-    Game::PokerAwareCards.info_for(cards)
+    Game::PokerAwareCards.create(cards)
   end
 end

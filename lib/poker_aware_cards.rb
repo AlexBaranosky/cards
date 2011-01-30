@@ -9,10 +9,12 @@ module Game
     extend StraightHelpers
     extend FlushHelpers
 
-    def initialize(groupings, is_flush, is_straight)
-      @groupings = groupings
-      @is_flush = is_flush
-      @is_straight = is_straight
+    def self.create(cards)
+      raise NotFiveCards unless cards.size == 5
+      groupings = Groupings.new(cards)
+      is_flush = all_same_suit?(cards)
+      is_straight = is_a_straight?(cards)
+      self.new(groupings, is_flush, is_straight)
     end
 
     def flush?
@@ -47,12 +49,12 @@ module Game
       @groupings.groups_of(4)
     end
 
-    def self.info_for(cards)
-      raise NotFiveCards unless cards.size == 5
-      groupings = Groupings.new(cards)
-      is_flush = all_same_suit?(cards)
-      is_straight = is_a_straight?(cards)
-      self.new(groupings, is_flush, is_straight)
+    private
+
+    def initialize(groupings, is_flush, is_straight)
+      @groupings = groupings
+      @is_flush = is_flush
+      @is_straight = is_straight
     end
   end
 

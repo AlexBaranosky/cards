@@ -10,12 +10,12 @@ module Game
 
     def self.create(cards)
       raise CannotCreateHand unless can_create_hand_from?(cards)
-      card_info = Game::PokerAwareCards.info_for(cards)
+      card_info = Game::PokerAwareCards.create(cards)
       self.new(cards, card_info)
     end
 
     def self.can_create_hand_from?(cards)
-      card_info = Game::PokerAwareCards.info_for(cards)
+      card_info = Game::PokerAwareCards.create(cards)
       valid?(card_info)
     end
 
@@ -43,6 +43,7 @@ module Game
     end
 
     protected
+
     def beats?(opponent)
       return compare_same_rank(opponent) if rank == opponent.rank
       rank > opponent.rank
@@ -57,6 +58,7 @@ module Game
     end
 
     private
+
     def wins_by_high_card?(opponent)
       cards.size.times do |index|
         if cards[index] != opponent.cards[index]
