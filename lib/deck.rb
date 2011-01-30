@@ -6,7 +6,7 @@ module Game
 
   class Deck
     def initialize
-      @cards = create_cards
+      @cards_by_name = create_cards
     end
 
     def next_card
@@ -17,18 +17,19 @@ module Game
 
     def select_card(id)
       raise EmptyDeck unless card_count > 0
-      @cards.delete(id)
+      @cards_by_name.delete(id)
     end
 
     def card_count
-      @cards.size
+      @cards_by_name.size
     end
 
     def remaining_cards
-      @cards.values
+      @cards_by_name.values
     end
 
     private
+
     def create_cards
       cards = {}
       RANKS.each do |rank|
