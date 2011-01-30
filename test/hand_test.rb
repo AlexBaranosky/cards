@@ -356,8 +356,7 @@ class HandTest < Test::Unit::TestCase
 
   def test_cannot_create_base_hand
     assert_raise NoMethodError do 
-     cards = create_cards("10 Spades", "3 Hearts", "4 Hearts", "J Diamonds", "8 Spades")
-     poker_aware_cards = PokerAwareCards.create(cards)
+     poker_aware_cards = create_poker_aware_cards("10 Spades", "3 Hearts", "4 Hearts", "J Diamonds", "8 Spades")
      Game::Hand.create(poker_aware_cards)
     end
   end

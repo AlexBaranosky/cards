@@ -7,17 +7,15 @@ module Game
 
   class PokerAwareCards
     include Comparable
-    extend StraightHelpers
+    include StraightHelpers
 
     def self.create(cards)
       raise NotFiveCards unless cards.size == 5
       groupings = Groupings.new(cards)
-      is_flush = cards.suits.uniq.size == 1
-      is_straight = is_a_straight?(cards)
-      self.new(cards, groupings, is_flush, is_straight)
+      self.new(cards, groupings)
     end
 
-    def wins_by_high_card(opponent)
+    def wins_by_high_card?(opponent)
       size.times do |index|
         if self[index] != opponent.poker_aware_cards[index]
           return self[index] > opponent.poker_aware_cards[index]
@@ -51,11 +49,11 @@ module Game
     end
 
     def flush?
-      @is_flush
+      @cards.suits.uniq.size == 1
     end
 
     def straight?
-      @is_straight
+      is_a_straight?(@cards)
     end
 
     def pairs
@@ -84,11 +82,9 @@ module Game
 
     private
 
-    def initialize(cards, groupings, is_flush, is_straight)
+    def initialize(cards, groupings)
       @cards = cards
       @groupings = groupings
-      @is_flush = is_flush
-      @is_straight = is_straight
     end
   end
 
