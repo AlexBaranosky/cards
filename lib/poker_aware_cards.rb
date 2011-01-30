@@ -12,7 +12,7 @@ module Game
     def self.create(cards)
       raise NotFiveCards unless cards.size == 5
       groupings = Groupings.new(cards)
-      is_flush = all_same_suit?(cards)
+      is_flush = cards.suits.uniq.size == 1
       is_straight = is_a_straight?(cards)
       self.new(cards, groupings, is_flush, is_straight)
     end
@@ -89,10 +89,6 @@ module Game
       @groupings = groupings
       @is_flush = is_flush
       @is_straight = is_straight
-    end
-
-    def self.all_same_suit?(cards)
-      cards.suits.uniq.size == 1
     end
   end
 
