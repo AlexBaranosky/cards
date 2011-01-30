@@ -12,8 +12,8 @@ module Game
 
     def next_card
      index = rand(card_count)
-     card_to_select_from = remaining_cards[index]
-     select_card(card_to_select_from.to_s)
+     card_to_select = remaining_cards[index]
+     select_card(card_to_select.to_s)
     end
 
     def select_card(id)

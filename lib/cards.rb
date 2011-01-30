@@ -1,6 +1,8 @@
 module Game
 
   class Cards
+    include Enumerable
+
     attr_reader :cards
     def initialize(cards=[])
       @cards = cards

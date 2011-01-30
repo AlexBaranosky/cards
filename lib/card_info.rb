@@ -59,8 +59,7 @@ module Game
   class Groupings
     def initialize(cards)
       @groupings = (0..4).map { Cards.new }
-      counts = Hash.new(0)
-      cards.each do |card|
+      cards.each_with_object(Hash.new(0)) do |card, counts|
         counts[card.rank] += 1
         add(card, counts[card.rank])
       end
@@ -72,9 +71,9 @@ module Game
 
     private
 
-    def add(card, index)
-      @groupings[index] << card
-      @groupings[index - 1].delete_if { |c| c.rank == card.rank }
+    def add(card, count)
+      @groupings[count] << card
+      @groupings[count - 1].delete_if { |c| c.rank == card.rank }
     end
   end
 end
