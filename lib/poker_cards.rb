@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/game_helpers.rb'
+require File.dirname(__FILE__) + '/straight_knowing.rb'
 require File.dirname(__FILE__) + '/sorted_cards.rb'
 
 module Game
@@ -6,13 +6,12 @@ module Game
   NotFiveCards = Class.new(ArgumentError)
 
   class PokerCards
-  include Comparable
-    include StraightHelpers
+    include Comparable
+    include StraightKnowing
 
     def self.create(cards)
       raise NotFiveCards unless cards.size == 5
-      groupings = GroupByCount.new(cards)
-      self.new(cards, groupings)
+      self.new(cards)
     end
 
     def wins_by_high_card?(other_poker_cards)
@@ -24,7 +23,7 @@ module Game
       false
     end
 
-   #TODO: Could use inheritence to get rid of all these methods that delegate straight to @cards
+    #TODO: Could use inheritence to get rid of all these methods that delegate straight to @cards
     def <=>(other)
       @cards <=> other.cards
     end
@@ -50,6 +49,7 @@ module Game
       @cards.suits.uniq.size == 1
     end
 
+    #TODO: looking to remove this special case logic somehow
     def straight?
       return true if is_ace_to_five?(@cards)
 
@@ -60,7 +60,7 @@ module Game
     end
 
     def five_card_combos
-      @cards.five_card_combos.map { |combo| PokerCards.create(combo)}
+      @cards.five_card_combos.map { |combo| PokerCards.create(combo) }
     end
 
     def pairs
@@ -89,16 +89,18 @@ module Game
 
     private
 
-    def initialize(cards, groupings)
+    def initialize(cards)
       @cards = cards
-      @groupings = groupings
+      @groupings = GroupByCount.new(cards)
     end
   end
 
   class GroupByCount
     def initialize(cards)
       @groupings = (0..4).map { SortedCards.new }
-      cards.each_with_object(Hash.new(0)) do |card, counts|
+      counts = Hash.new(0)
+
+      cards.each do |card|
         counts[card.rank] += 1
         add(card, counts[card.rank])
       end

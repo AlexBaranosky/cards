@@ -7,8 +7,7 @@ class PokerCardsTest < Test::Unit::TestCase
 
   def test_should_error_when_given_too_many_cards
     assert_raise Game::NotFiveCards do
-      poker_cards_for("3 Spades", "2 Hearts", "5 Clubs",
-                     "A Diamonds", "K Diamonds", "5 Hearts")
+      poker_cards_for("3 Spades", "2 Hearts", "5 Clubs", "A Diamonds", "K Diamonds", "5 Hearts")
     end
   end
 
@@ -19,85 +18,72 @@ class PokerCardsTest < Test::Unit::TestCase
   end
 
   def test_should_have_no_pairs
-    info = poker_cards_for("3 Spades", "2 Hearts", "5 Clubs",
-                                "A Diamonds", "K Diamonds")
-    assert_nil info.pairs
+    poker_cards = poker_cards_for("3 Spades", "2 Hearts", "5 Clubs", "A Diamonds", "K Diamonds")
+    assert_nil poker_cards.pairs
   end
 
   def test_high_and_low_pairs_should_be_same_with_single_pair
-    info = poker_cards_for("3 Spades", "5 Hearts", "5 Clubs",
-                                "A Diamonds", "K Diamonds")
-    assert_equal 5, info.high_pair.rank
-    assert_equal 5, info.low_pair.rank
+    poker_cards = poker_cards_for("3 Spades", "5 Hearts", "5 Clubs", "A Diamonds", "K Diamonds")
+    assert_equal 5, poker_cards.high_pair.rank
+    assert_equal 5, poker_cards.low_pair.rank
   end
 
   def test_should_have_two_pairs
-    info = poker_cards_for("3 Spades", "A Hearts", "5 Clubs",
-                                "A Diamonds", "3 Diamonds")
-    assert_equal 2, info.pair_count
-    assert_equal "A", info.high_pair.rank
-    assert_equal 3, info.low_pair.rank
+    poker_cards = poker_cards_for("3 Spades", "A Hearts", "5 Clubs", "A Diamonds", "3 Diamonds")
+    assert_equal 2, poker_cards.pair_count
+    assert_equal "A", poker_cards.high_pair.rank
+    assert_equal 3, poker_cards.low_pair.rank
   end
 
   def test_should_have_trips_and_pair
-    info = poker_cards_for("3 Spades", "A Hearts", "A Clubs",
-                                "A Diamonds", "3 Diamonds")
-    assert_equal 1, info.pair_count
-    assert_equal 1, info.trips.size
-    assert_equal "A", info.trips.first.rank
+    poker_cards = poker_cards_for("3 Spades", "A Hearts", "A Clubs", "A Diamonds", "3 Diamonds")
+    assert_equal 1, poker_cards.pair_count
+    assert_equal 1, poker_cards.trips.size
+    assert_equal "A", poker_cards.trips.first.rank
   end
 
   def test_should_have_quads
-    info = poker_cards_for("3 Spades", "A Hearts", "A Clubs",
-                                "A Diamonds", "A Spades")
-    assert_equal 1, info.quads.size
-    assert_equal "A", info.quads.first.rank
+    poker_cards = poker_cards_for("3 Spades", "A Hearts", "A Clubs", "A Diamonds", "A Spades")
+    assert_equal 1, poker_cards.quads.size
+    assert_equal "A", poker_cards.quads.first.rank
   end
 
   def test_should_not_count_quads_as_pair_or_trips
-    info = poker_cards_for("3 Spades", "A Hearts", "A Clubs",
-                                "A Diamonds", "A Spades")
-    assert_nil info.trips
-    assert_nil info.pairs
+    poker_cards = poker_cards_for("3 Spades", "A Hearts", "A Clubs", "A Diamonds", "A Spades")
+    assert_nil poker_cards.trips
+    assert_nil poker_cards.pairs
   end
 
   def test_should_not_count_trips_as_pair
-    info = poker_cards_for("3 Spades", "A Hearts", "A Clubs",
-                                "Q Diamonds", "A Spades")
-    assert_nil info.pairs
+    poker_cards = poker_cards_for("3 Spades", "A Hearts", "A Clubs", "Q Diamonds", "A Spades")
+    assert_nil poker_cards.pairs
   end
 
   def test_should_be_a_flush
-    info = poker_cards_for("3 Spades", "2 Spades", "5 Spades",
-                                "A Spades", "K Spades")
-    assert info.flush?
+    poker_cards = poker_cards_for("3 Spades", "2 Spades", "5 Spades", "A Spades", "K Spades")
+    assert poker_cards.flush?
   end
 
   def test_should_not_be_a_flush
-    info = poker_cards_for("3 Spades", "2 Spades", "5 Spades",
-                                "A hearts", "K Spades")
-    assert !info.flush?
+    poker_cards = poker_cards_for("3 Spades", "2 Spades", "5 Spades", "A hearts", "K Spades")
+    assert !poker_cards.flush?
   end
 
   def test_should_not_be_a_straight
-    info = poker_cards_for("10 Spades", "J Diamonds", "2 Spades",
-                                "9 hearts", "K Spades")
-    assert !info.straight?
-    info = poker_cards_for("7 Spades", "8 Spades", "2 Spades",
-                                   "10 Spades", "9 Spades")
-    assert !info.straight?
+    poker_cards = poker_cards_for("10 Spades", "J Diamonds", "2 Spades", "9 hearts", "K Spades")
+    assert !poker_cards.straight?
+    poker_cards = poker_cards_for("7 Spades", "8 Spades", "2 Spades", "10 Spades", "9 Spades")
+    assert !poker_cards.straight?
   end
 
   def test_should_be_a_straight
-    info = poker_cards_for("10 Spades", "J Diamonds", "Q Spades",
-                                "9 hearts", "K Spades")
-    assert info.straight?
+    poker_cards = poker_cards_for("10 Spades", "J Diamonds", "Q Spades", "9 hearts", "K Spades")
+    assert poker_cards.straight?
   end
 
   def test_ace_to_five_straight
-    info = poker_cards_for("2 Spades", "3 Diamonds", "4 Spades",
-                                "5 hearts", "A Spades")
-    assert info.straight?
+    poker_cards = poker_cards_for("2 Spades", "3 Diamonds", "4 Spades", "5 hearts", "A Spades")
+    assert poker_cards.straight?
   end
 
   def poker_cards_for(*cards)

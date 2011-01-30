@@ -56,6 +56,7 @@ module Game
     end
 
     private
+    
     def order_cards
       cards.sort! { |a,b| b <=> a }
     end

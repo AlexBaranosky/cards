@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/game_helpers.rb'
+require File.dirname(__FILE__) + '/straight_knowing.rb'
 module Game
   module StraightComparisons
-    include StraightHelpers
+    include StraightKnowing
 
     private
 

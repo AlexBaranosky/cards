@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/game_helpers.rb'
+require File.dirname(__FILE__) + '/straight_knowing.rb'
 require File.dirname(__FILE__) + '/ranks.rb'
 
 module Game
