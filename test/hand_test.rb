@@ -283,42 +283,31 @@ class HandTest < Test::Unit::TestCase
   end
 
   def test_should_error_if_invalid_two_pair_hand
-   assert_invalid_hand_of_type(Game::TwoPair, "7 Spades", "7 Diamonds",
-                               "10 Hearts", "Q Diamonds", "J Spades")
+   assert_invalid_hand_of_type(Game::TwoPair, "7 Spades", "7 Diamonds", "10 Hearts", "Q Diamonds", "J Spades")
   end
 
-
   def test_should_error_if_invalid_three_of_a_kind
-   assert_invalid_hand_of_type(Game::ThreeOfAKind, "7 Spades", "7 Diamonds",
-                               "8 Hearts", "Q Diamonds", "K Spades")
-   assert_invalid_hand_of_type(Game::ThreeOfAKind, "7 Spades", "7 Diamonds",
-                               "7 Hearts", "Q Diamonds", "Q Spades")
+   assert_invalid_hand_of_type(Game::ThreeOfAKind, "7 Spades", "7 Diamonds", "8 Hearts", "Q Diamonds", "K Spades")
+   assert_invalid_hand_of_type(Game::ThreeOfAKind, "7 Spades", "7 Diamonds", "7 Hearts", "Q Diamonds", "Q Spades")
   end
 
   def test_should_give_error_if_not_a_valid_pair_hand
-   assert_invalid_hand_of_type(Game::Pair, "5 Spades", "7 Diamonds",
-                               "10 Hearts", "Q Diamonds", "J Spades")
-   assert_invalid_hand_of_type(Game::Pair, "10 Spades", "10 Diamonds",
-                               "10 Hearts", "J Diamonds", "J Spades")
+   assert_invalid_hand_of_type(Game::Pair, "5 Spades", "7 Diamonds", "10 Hearts", "Q Diamonds", "J Spades")
+   assert_invalid_hand_of_type(Game::Pair, "10 Spades", "10 Diamonds", "10 Hearts", "J Diamonds", "J Spades")
   end
 
   def test_should_not_be_valid_for_high_card_hands
-   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds",
-                               "10 Hearts", "Q Diamonds", "J Spades")
-   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds",
-                               "Q Hearts", "Q Diamonds", "J Spades")
-   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds",
-                               "Q Hearts", "Q Diamonds", "Q Clubs")
-   assert_invalid_hand_of_type(Game::HighCard, "J Spades", "7 Spades",
-                               "A Spades", "2 Spades", "8 Spades")
-   assert_invalid_hand_of_type(Game::HighCard, "J Spades", "7 Spades",
-                               "9 Clubs", "10 Spades", "8 Spades")
+   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds", "10 Hearts", "Q Diamonds", "J Spades")
+   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds", "Q Hearts", "Q Diamonds", "J Spades")
+   assert_invalid_hand_of_type(Game::HighCard, "Q Spades", "7 Diamonds", "Q Hearts", "Q Diamonds", "Q Clubs")
+   assert_invalid_hand_of_type(Game::HighCard, "J Spades", "7 Spades", "A Spades", "2 Spades", "8 Spades")
+   assert_invalid_hand_of_type(Game::HighCard, "J Spades", "7 Spades", "9 Clubs", "10 Spades", "8 Spades")
   end
 
   def test_cannot_create_base_hand
     assert_raise NoMethodError do 
-     poker_aware_cards = create_poker_aware_cards("10 Spades", "3 Hearts", "4 Hearts", "J Diamonds", "8 Spades")
-     Game::Hand.create(poker_aware_cards)
+     poker_cards = create_poker_cards("10 Spades", "3 Hearts", "4 Hearts", "J Diamonds", "8 Spades")
+     Game::Hand.create(poker_cards)
     end
   end
 

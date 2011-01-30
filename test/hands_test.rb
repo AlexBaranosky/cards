@@ -94,7 +94,7 @@ class HandsTest < Test::Unit::TestCase
 
   def best_possible_hand_from(*card_strings)
     cards = create_cards(*card_strings)
-    poker_aware_cards = Game::PokerAwareCards.create(cards)
-    Game::Hands.best_possible_hand_from(poker_aware_cards)
+    poker_cards = Game::PokerCards.create(cards)
+    Game::Hands.best_possible_hand_from(poker_cards)
   end
 end

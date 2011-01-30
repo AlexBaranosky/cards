@@ -5,9 +5,9 @@ module Game
 
     private
     def beats_same_rank?(opponent)
-      if is_ace_to_five?(poker_aware_cards)
+      if is_ace_to_five?(poker_cards)
         return false
-      elsif is_ace_to_five?(opponent.poker_aware_cards)
+      elsif is_ace_to_five?(opponent.poker_cards)
         return true
       end
       return self.high_card > opponent.high_card

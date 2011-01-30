@@ -5,31 +5,28 @@ module Game
 
   NotFiveCards = Class.new(ArgumentError)
 
-  class PokerAwareCards
-    include Comparable
+  class PokerCards
+  include Comparable
     include StraightHelpers
 
     def self.create(cards)
       raise NotFiveCards unless cards.size == 5
-      groupings = Groupings.new(cards)
+      groupings = GroupByCount.new(cards)
       self.new(cards, groupings)
     end
 
     def wins_by_high_card?(opponent)
       size.times do |index|
-        if self[index] != opponent.poker_aware_cards[index]
-          return self[index] > opponent.poker_aware_cards[index]
+        if self[index] != opponent.poker_cards[index]
+          return self[index] > opponent.poker_cards[index]
         end
       end
       false
     end
 
+   #TODO: Could use inheritence to get rid of all these methods that delegate straight to @cards
     def <=>(other)
       @cards <=> other.cards
-    end
-
-    def five_card_combos
-      @cards.five_card_combos.map { |combo| PokerAwareCards.create(combo)}
     end
 
     def size
@@ -47,6 +44,7 @@ module Game
     def [](index)
       @cards[index]
     end
+    #################################################################################################
 
     def flush?
       @cards.suits.uniq.size == 1
@@ -54,6 +52,10 @@ module Game
 
     def straight?
       is_a_straight?(@cards)
+    end
+
+    def five_card_combos
+      @cards.five_card_combos.map { |combo| PokerCards.create(combo)}
     end
 
     def pairs
@@ -88,7 +90,7 @@ module Game
     end
   end
 
-  class Groupings
+  class GroupByCount
     def initialize(cards)
       @groupings = (0..4).map { SortedCards.new }
       cards.each_with_object(Hash.new(0)) do |card, counts|
