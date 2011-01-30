@@ -31,12 +31,12 @@ module Game
       comparison
     end
 
+    protected
+
     def compare_same_rank(other_hand)
-      return 0 if @poker_cards == other_hand.poker_cards
+      return 0 if @poker_cards.ranks == other_hand.poker_cards.ranks
       beats_same_rank?(other_hand) ? 1 : -1
     end
-
-    protected
 
     def high_pair
       poker_cards.high_pair

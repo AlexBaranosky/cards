@@ -50,6 +50,12 @@ class HandTest < Test::Unit::TestCase
     assert_equal -1, @pair <=> @flush
     assert_equal 1, @full_house <=> @two_pair 
   end
+  
+  def test_ignored_suit_when_comkparing_same_rank
+    high_card1 = high_card_hand_from("3 Spades", "2 Hearts", "5 Clubs", "A Diamonds", "K Diamonds")
+    high_card2 = high_card_hand_from("3 Spades", "2 Hearts", "5 Clubs", "A Hearts", "K Diamonds")
+    assert_equal 0, high_card1 <=> high_card2
+  end
 
   def test_A_to_5_straight_flush
     losing_straight_flush = straight_flush_from("A Clubs", "2 Clubs", "3 Clubs", "4 Clubs", "5 Clubs")
