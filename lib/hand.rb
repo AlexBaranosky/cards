@@ -4,32 +4,31 @@ require File.dirname(__FILE__) + '/poker_aware_cards.rb'
 module Game
   class Hand
     include Comparable
-    attr_reader :rank, :cards, :card_info
+    attr_reader :rank, :poker_aware_cards
 
     CannotCreateHand = Class.new(Exception)
 
     def self.create(cards)
       raise CannotCreateHand unless can_create_hand_from?(cards)
-      card_info = Game::PokerAwareCards.create(cards)
-      self.new(cards, card_info)
+      poker_aware_cards = Game::PokerAwareCards.create(cards)
+      self.new(poker_aware_cards)
     end
 
     def self.can_create_hand_from?(cards)
-      card_info = Game::PokerAwareCards.create(cards)
-      valid?(card_info)
+      poker_aware_cards = Game::PokerAwareCards.create(cards)
+      valid?(poker_aware_cards)
     end
 
-    def initialize(cards, card_info)
-      @cards = cards
-      @card_info = card_info
+    def initialize(poker_aware_cards)
+      @poker_aware_cards = poker_aware_cards
     end
 
     def ranks
-      cards.ranks
+      poker_aware_cards.ranks
     end
 
     def high_card
-      cards.high_card
+      poker_aware_cards.high_card
     end
 
     def self.rank
@@ -50,19 +49,19 @@ module Game
     end
 
     def high_pair
-      card_info.high_pair
+      poker_aware_cards.high_pair
     end
 
     def low_pair
-      card_info.low_pair
+      poker_aware_cards.low_pair
     end
 
     private
 
     def wins_by_high_card?(opponent)
-      cards.size.times do |index|
-        if cards[index] != opponent.cards[index]
-          return cards[index] > opponent.cards[index]
+      poker_aware_cards.size.times do |index|
+        if poker_aware_cards[index] != opponent.poker_aware_cards[index]
+          return poker_aware_cards[index] > opponent.poker_aware_cards[index]
         end
       end
       false
@@ -70,13 +69,13 @@ module Game
   end
 
   class HighCard < Hand
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 0
       super
     end
 
-    def self.valid?(card_info)
-      !(card_info.pairs || card_info.trips || card_info.quads || card_info.flush? || card_info.straight?)
+    def self.valid?(poker_aware_cards)
+      !(poker_aware_cards.pairs || poker_aware_cards.trips || poker_aware_cards.quads || poker_aware_cards.flush? || poker_aware_cards.straight?)
     end
 
     private
@@ -86,13 +85,13 @@ module Game
   end
 
   class Pair < Hand            
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 1
       super
     end
 
-    def self.valid?(card_info)
-      card_info.pairs && card_info.pair_count == 1 && !card_info.trips
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.pairs && poker_aware_cards.pair_count == 1 && !poker_aware_cards.trips
     end
 
     private
@@ -106,13 +105,13 @@ module Game
 
   class TwoPair < Hand
 
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 2
       super
     end
 
-    def self.valid?(card_info)
-      card_info.pairs && card_info.pair_count == 2
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.pairs && poker_aware_cards.pair_count == 2
     end
 
 
@@ -129,18 +128,18 @@ module Game
   end
 
   class ThreeOfAKind < Hand
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 3
       super
     end
 
-    def self.valid?(card_info)
-      card_info.trips && !card_info.pairs
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.trips && !poker_aware_cards.pairs
     end
 
     protected
     def trips
-      card_info.trips.first
+      poker_aware_cards.trips.first
     end
 
     private
@@ -155,24 +154,24 @@ module Game
   class Straight < Hand
     include Game::StraightComparisons
 
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 4
       super
     end
 
-    def self.valid?(card_info)
-      card_info.straight? && !card_info.flush?
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.straight? && !poker_aware_cards.flush?
     end
   end
 
   class Flush < Hand
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 5
       super
     end
 
-    def self.valid?(card_info)
-      card_info.flush? && !card_info.straight?
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.flush? && !poker_aware_cards.straight?
     end
 
     def compare_same_rank(opponent)
@@ -182,18 +181,18 @@ module Game
 
   class FullHouse < Hand
 
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 6
       super
     end
 
-    def self.valid?(card_info)
-      card_info.trips && card_info.pairs
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.trips && poker_aware_cards.pairs
     end
 
     protected
     def trips
-      card_info.trips.first
+      poker_aware_cards.trips.first
     end
 
 
@@ -208,18 +207,18 @@ module Game
   end
 
   class FourOfAKind < Hand
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 7
       super
     end
 
-    def self.valid?(card_info)
-      card_info.quads
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.quads
     end
 
     protected
     def quads
-      card_info.quads.first
+      poker_aware_cards.quads.first
     end
 
     private
@@ -234,13 +233,13 @@ module Game
   class StraightFlush < Hand
     include Game::StraightComparisons
 
-    def initialize(cards, card_info)
+    def initialize(poker_aware_cards)
       @rank = 8
       super
     end
 
-    def self.valid?(card_info)
-      card_info.flush? && card_info.straight?
+    def self.valid?(poker_aware_cards)
+      poker_aware_cards.flush? && poker_aware_cards.straight?
     end
   end
 end

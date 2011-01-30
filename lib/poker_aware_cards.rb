@@ -14,7 +14,23 @@ module Game
       groupings = Groupings.new(cards)
       is_flush = all_same_suit?(cards)
       is_straight = is_a_straight?(cards)
-      self.new(groupings, is_flush, is_straight)
+      self.new(cards, groupings, is_flush, is_straight)
+    end
+
+    def size
+      @cards.size
+    end
+
+    def high_card
+      @cards.high_card
+    end
+
+    def ranks
+      @cards.ranks
+    end
+
+    def [](index)
+      @cards[index]
     end
 
     def flush?
@@ -51,7 +67,8 @@ module Game
 
     private
 
-    def initialize(groupings, is_flush, is_straight)
+    def initialize(cards, groupings, is_flush, is_straight)
+      @cards = cards
       @groupings = groupings
       @is_flush = is_flush
       @is_straight = is_straight
