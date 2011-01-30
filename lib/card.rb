@@ -1,9 +1,8 @@
-require File.dirname(__FILE__) + '/game_constants.rb'
 require File.dirname(__FILE__) + '/game_helpers.rb'
+require File.dirname(__FILE__) + '/ranks.rb'
 
 module Game
   class Card
-    include CardRanking
     include Comparable
 
     attr_reader :suit, :rank
@@ -24,7 +23,7 @@ module Game
     end
 
     def <=>(card)
-      rank_index_of(self) <=> rank_index_of(card)
+      Ranks.rank_index_of(self) <=> Ranks.rank_index_of(card)
     end
   end
 end

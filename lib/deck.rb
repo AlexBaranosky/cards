@@ -1,18 +1,19 @@
-require File.dirname(__FILE__) + '/game_constants.rb'
 require File.dirname(__FILE__) + '/card.rb'
+require File.dirname(__FILE__) + '/ranks.rb'
+require File.dirname(__FILE__) + '/suits.rb'
 
 module Game
   EmptyDeck = Class.new(RuntimeError) 
 
   class Deck
     def initialize
-      @cards_by_name = create_cards
+      @cards_by_name = one_of_each_of_the_52_cards
     end
 
     def next_card
-     index = rand(self.card_count)
-     card_to_select =  remaining_cards[index]
-     select_card(card_to_select.to_s)
+     index = rand(card_count)
+     card_to_select_from = remaining_cards[index]
+     select_card(card_to_select_from.to_s)
     end
 
     def select_card(id)
@@ -30,10 +31,10 @@ module Game
 
     private
 
-    def create_cards
+    def one_of_each_of_the_52_cards
       cards = {}
-      RANKS.each do |rank|
-        SUITS.each do |suit|
+      Ranks::RANKS.each do |rank|
+        Suits::SUITS.each do |suit|
           card = Card.new(rank, suit)
           cards[card.to_s] = card
         end

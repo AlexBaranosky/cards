@@ -1,9 +1,4 @@
 module Game
-  module CardRanking
-    def rank_index_of(card)
-      RANKS.find_index(card.rank)
-    end
-  end
 
   module StraightHelpers
     def is_a_straight?(cards)
@@ -16,7 +11,7 @@ module Game
     end
 
     def in_order?(card, next_card)
-      (rank_index_of(card) - 1 ) == rank_index_of(next_card)
+      Ranks.rank_index_of(card) - 1 == Ranks.rank_index_of(next_card)
     end
 
     def is_ace_to_five?(cards)

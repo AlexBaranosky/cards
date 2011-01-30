@@ -8,7 +8,6 @@ module Game
   class CardInfo
     extend StraightHelpers
     extend FlushHelpers
-    extend CardRanking
 
     def initialize(groupings, is_flush, is_straight)
       @groupings = groupings
@@ -40,7 +39,7 @@ module Game
       pairs.size
     end
 
-    def trips 
+    def trips
       @groupings.groups_of(3)
     end
 
@@ -53,7 +52,7 @@ module Game
       groupings = Groupings.new(cards)
       is_flush = all_same_suit?(cards)
       is_straight = is_a_straight?(cards)
-      self.new(groupings, is_flush, is_straight) 
+      self.new(groupings, is_flush, is_straight)
     end
   end
 
@@ -70,8 +69,9 @@ module Game
     def groups_of(count)
       @groupings[count].empty? ? nil : @groupings[count]
     end
-    
+
     private
+
     def add(card, index)
       @groupings[index] << card
       @groupings[index - 1].delete_if { |c| c.rank == card.rank }
