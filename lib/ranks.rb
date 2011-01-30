@@ -6,5 +6,9 @@ module Game
     def self.rank_index_of(card)
       RANKS.find_index(card.rank)
     end
+
+    def self.in_order?(card, next_card)
+      rank_index_of(card) - 1 == rank_index_of(next_card)
+    end
   end
 end
