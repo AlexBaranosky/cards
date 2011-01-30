@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/game_helpers.rb'
 
 module Game
   class Card
-    include CardHelpers
+    include CardRanking
     include Comparable
 
     attr_reader :suit, :rank

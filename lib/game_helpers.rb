@@ -1,5 +1,5 @@
 module Game
-  module CardHelpers
+  module CardRanking
     def rank_index_of(card)
       RANKS.find_index(card.rank)
     end

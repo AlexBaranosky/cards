@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/game_helpers.rb'
-require File.dirname(__FILE__) + '/cards_container.rb'
+require File.dirname(__FILE__) + '/cards.rb'
 
 module Game
 
@@ -8,7 +8,7 @@ module Game
   class CardInfo
     extend StraightHelpers
     extend FlushHelpers
-    extend CardHelpers
+    extend CardRanking
 
     def initialize(groupings, is_flush, is_straight)
       @groupings = groupings
@@ -57,7 +57,7 @@ module Game
     end
   end
 
-  Grouping = CardsContainer
+  Grouping = Cards
   CardCountHash = Hash
 
   class Groupings
