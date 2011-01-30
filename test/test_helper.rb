@@ -7,14 +7,12 @@ module TestHelper
     assert_nil klass.create(cards) 
   end
 
-  def create_cards(*cards)
-    hand = []
-    cards.each do |c| 
-       rank, suit = c.split(" ") 
+  def create_cards(*card_strings)
+    card_strings.each_with_object(Cards.new) do |cards, string|
+       rank, suit = string.split(" ")
        rank = rank.to_i if rank < "A"
-       hand << Game::Card.new(rank, suit)
+       cards << Game::Card.new(rank, suit)
     end
-    return Game::Cards.new(hand)
   end
 
   def two_pair_hand_from(*cards)
