@@ -88,6 +88,7 @@ class HandTest < Test::Unit::TestCase
     winning_quads = quads_hand_from("K Clubs", "K Hearts", "K Spades", "K Diamonds", "A Clubs")
     assert winning_quads > losing_quads
   end
+  
   def test_full_house_should_beat_inferior_hands
     assert @full_house > @high_card
     assert @full_house > @pair

@@ -51,7 +51,12 @@ module Game
     end
 
     def straight?
-      is_a_straight?(@cards)
+      return true if is_ace_to_five?(@cards)
+
+      (@cards.size - 1).times do |index|
+        return false unless in_order?(@cards[index], @cards[index+1])
+      end
+      return true
     end
 
     def five_card_combos
