@@ -285,6 +285,7 @@ class HandTest < Test::Unit::TestCase
    assert_invalid_hand_of_type(Game::FullHouse, "7 Spades", "8 Spades", "7 Diamonds", "Q Spades", "7 Clubs")
    assert_invalid_hand_of_type(Game::FullHouse, "2 Spades", "8 Spades", "7 Diamonds", "Q Spades", "7 Clubs")
   end
+  
   def test_should_error_if_invalid_straight_hand
    assert_invalid_hand_of_type(Game::Straight, "7 Spades", "8 Diamonds", "2 Hearts", "10 Diamonds", "J Spades")
    assert_invalid_hand_of_type(Game::Straight, "7 Hearts", "8 Hearts", "9 Hearts", "10 Hearts", "J Hearts")

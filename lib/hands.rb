@@ -2,10 +2,11 @@ require File.dirname(__FILE__) + '/../lib/hand.rb'
 
 module Game
   class Hands
-    HANDS_WORST_TO_BEST = [ Game::HighCard, Game::Pair, Game::TwoPair,
-                            Game::ThreeOfAKind, Game::Straight, 
-                            Game::Flush, Game::FullHouse, 
-                            Game::FourOfAKind, Game::StraightFlush ].sort { |h1, h2| h2.rank <=> h1.rank }
+    HANDS = [Game::HighCard, Game::Pair, Game::TwoPair,
+             Game::ThreeOfAKind, Game::Straight,
+             Game::Flush, Game::FullHouse, 
+             Game::FourOfAKind, Game::StraightFlush]
+
     class << self
       def best_possible_hand_from(poker_cards)
         possible_hands_from(poker_cards).max
@@ -20,7 +21,7 @@ module Game
       end
 
       def hand_for(poker_cards)
-        hand_class = HANDS_WORST_TO_BEST.find do |hand_class|
+        hand_class = HANDS.find do |hand_class|
           hand_class.can_create_hand_from?(poker_cards)
         end
         hand_class.create(poker_cards)
