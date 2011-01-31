@@ -13,10 +13,6 @@ module Game
       self.new(poker_cards)
     end
 
-    def self.can_create_hand_from?(poker_cards)
-      valid?(poker_cards)
-    end
-
     def initialize(poker_cards)
       @poker_cards = poker_cards
     end
@@ -53,7 +49,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       !(poker_cards.pairs || poker_cards.trips || poker_cards.quads || poker_cards.flush? || poker_cards.straight?)
     end
 
@@ -69,7 +65,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.pairs && poker_cards.pair_count == 1 && !poker_cards.trips
     end
 
@@ -89,10 +85,9 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.pairs && poker_cards.pair_count == 2
     end
-
 
     private
     def beats_same_rank?(other_hand)
@@ -112,7 +107,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.trips && !poker_cards.pairs
     end
 
@@ -138,7 +133,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.straight? && !poker_cards.flush?
     end
   end
@@ -149,7 +144,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.flush? && !poker_cards.straight?
     end
 
@@ -165,7 +160,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.trips && poker_cards.pairs
     end
 
@@ -191,7 +186,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.quads
     end
 
@@ -217,7 +212,7 @@ module Game
       super
     end
 
-    def self.valid?(poker_cards)
+    def self.can_create_hand_from?(poker_cards)
       poker_cards.flush? && poker_cards.straight?
     end
   end

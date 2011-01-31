@@ -26,32 +26,27 @@ class HandsTest < Test::Unit::TestCase
   end
 
   def test_should_create_straight_hand
-    hand = best_possible_hand_from("7 Spades", "8 Spades", "J Hearts",
-                                   "10 Clubs", "9 Spades")
+    hand = best_possible_hand_from("7 Spades", "8 Spades", "J Hearts", "10 Clubs", "9 Spades")
     assert_equal Game::Straight, hand.class
   end
 
   def test_should_create_flush_hand
-    hand = best_possible_hand_from("7 Spades", "8 Spades", "2 Spades",
-                                   "10 Spades", "9 Spades")
+    hand = best_possible_hand_from("7 Spades", "8 Spades", "2 Spades", "10 Spades", "9 Spades")
     assert_equal Game::Flush, hand.class
   end
 
   def test_should_create_full_house
-    hand = best_possible_hand_from("7 Clubs", "7 Spades", "Q Spades",
-                                   "7 Diamonds", "Q Hearts")
+    hand = best_possible_hand_from("7 Clubs", "7 Spades", "Q Spades", "7 Diamonds", "Q Hearts")
     assert_equal Game::FullHouse, hand.class
   end
 
   def test_should_create_four_of_a_kind
-    hand = best_possible_hand_from("7 Clubs", "7 Spades", "Q Spades",
-                                   "7 Diamonds", "7 Hearts")
+    hand = best_possible_hand_from("7 Clubs", "7 Spades", "Q Spades", "7 Diamonds", "7 Hearts")
     assert_equal Game::FourOfAKind, hand.class
   end
 
   def test_should_create_straight_flush_hand
-    hand = best_possible_hand_from("7 Spades", "8 Spades", "10 Spades",
-                                   "J Spades", "9 Spades")
+    hand = best_possible_hand_from("7 Spades", "8 Spades", "10 Spades", "J Spades", "9 Spades")
     assert_equal Game::StraightFlush, hand.class
   end
 
