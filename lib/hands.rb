@@ -2,10 +2,7 @@ require File.dirname(__FILE__) + '/../lib/hand.rb'
 
 module Game
   class Hands
-    HANDS = [Game::HighCard, Game::Pair, Game::TwoPair,
-             Game::ThreeOfAKind, Game::Straight,
-             Game::Flush, Game::FullHouse, 
-             Game::FourOfAKind, Game::StraightFlush]
+    HANDS = [HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush]
 
     class << self
       def best_possible_hand_from(poker_cards)
